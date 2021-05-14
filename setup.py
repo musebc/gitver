@@ -1,6 +1,3 @@
-#!/usr/bin/env python2
-# coding=utf-8
-
 import sys
 from setuptools import setup
 from gitver.version import gitver_version, gitver_pypi
@@ -20,10 +17,10 @@ def readme():
             import pypandoc
             return pypandoc.convert('README.md', 'rst')
         except ImportError:
-            print "Warning: the \"pypandoc\" package and/or the pandoc " \
-                  "binary can't be found on your system: if you want to " \
-                  "generate the README.rst for PyPI you'll need to install " \
-                  "them properly, else a fallback description will be used."
+            print("Warning: the \"pypandoc\" package and/or the pandoc "
+                  "binary can't be found on your system: if you want to "
+                  "generate the README.rst for PyPI you'll need to install "
+                  "them properly, else a fallback description will be used.")
 
     # falling back to a simple description
     return 'Simple version string management for git'
@@ -42,9 +39,9 @@ def main():
     ]
 
     if make_sdist:
-        print "--------------------------------------------------"
-        print "Setting up for " + vtype + " v" + gitver_version
-        print "--------------------------------------------------"
+        print("--------------------------------------------------")
+        print("Setting up for " + vtype + " v" + gitver_version)
+        print("--------------------------------------------------")
 
     setup(
         name='gitver',
@@ -52,9 +49,9 @@ def main():
         description='Simple version string management for git',
         long_description=readme(),
         license='Apache License, Version 2.0',
-        author='Manuel Bua',
-        author_email='manuel.bua[at]gmail.com',
-        url='https://github.com/manuelbua/gitver',
+        author='Brian Muse',
+        author_email='brianmuse33@gmail.com',
+        url='https://github.com/musebc/gitver',
         scripts=scripts,
         packages=['gitver'],
         install_requires=requirements(),
@@ -62,6 +59,11 @@ def main():
             'Development Status :: 4 - Beta',
             'License :: OSI Approved :: Apache Software License',
             'Programming Language :: Python :: 2.7',
+            'Programming Language :: Python :: 3',
+            'Programming Language :: Python :: 3.6',
+            'Programming Language :: Python :: 3.7',
+            'Programming Language :: Python :: 3.8',
+            'Programming Language :: Python :: 3.9',
             'Topic :: Software Development :: Version Control',
         ]
     )

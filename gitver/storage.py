@@ -1,6 +1,3 @@
-#!/usr/bin/env python2
-# coding=utf-8
-
 """
 Represents one of the simplest form of key-value storage to file
 """
@@ -36,7 +33,7 @@ class KVStore(object):
         return False
 
     def items(self):
-        return self.__data.items()
+        return list(self.__data.items())
 
     def get(self, key):
         if key in self.__data:
