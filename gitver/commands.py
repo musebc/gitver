@@ -7,7 +7,7 @@ import os
 import sys
 from string import Template
 
-from .termcolors import term, bold
+from .termcolors import term
 from .git import get_repo_info
 from gitver.storage import KVStore
 from .sanity import check_gitignore
@@ -15,7 +15,6 @@ from .defines import CFGDIR, PRJ_ROOT, CFGDIRNAME
 from .version import gitver_version, gitver_buildid
 
 
-# file where to store NEXT strings <=> TAG user-defined mappings
 NEXT_STORE_FILE = os.path.join(CFGDIR, ".next_store")
 TPLDIR = os.path.join(CFGDIR, 'templates')
 
@@ -70,7 +69,7 @@ def parse_templates(cfg, templates, repo, next_custom, preview):
                 term.err("The template output directory \"" + outdir +
                          "\" doesn't exists.")
 
-            term.info("Processing template \"" + bold(t) + "\" for " + output +
+            term.info("Processing template \"" + t + "\" for " + output +
                       "...")
 
             lines = lines[1:]
@@ -222,8 +221,8 @@ def cmd_version(cfg, args):
     """
     v = ('v' + gitver_version) if gitver_version is not None else 'n/a'
     b = gitver_buildid if gitver_buildid is not None else 'n/a'
-    term.out("This is gitver " + bold(v))
-    term.out("Full build ID is " + bold(b))
+    term.out("This is gitver " + v)
+    term.out("Full build ID is " + b)
     from gitver import __license__
     term.out(__license__)
 
@@ -319,7 +318,7 @@ def cmd_list_templates(cfg, args):
     if len(tpls) > 0:
         term.out("Available templates:")
         for t in tpls:
-            term.out("    " + bold(t) + " (" + template_path(t) + ")")
+            term.out("    " + t + " (" + template_path(t) + ")")
     else:
         term.out("No templates available in " + TPLDIR)
 

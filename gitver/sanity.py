@@ -4,7 +4,7 @@ Implements various sanity checks
 
 import os
 import sys
-from gitver.termcolors import term, bold
+from gitver.termcolors import term
 from gitver.defines import PRJ_ROOT, CFGDIR, CFGDIRNAME, GITIGNOREFILE
 
 
@@ -19,7 +19,7 @@ def check_project_root():
 def check_config_dir():
     # checks if configuration directory exists
     if not os.path.exists(CFGDIR):
-        term.err("Please run " + bold("gitver init") + " first.")
+        term.err("Please run gitver init first.")
         sys.exit(1)
 
 

@@ -4,10 +4,9 @@ The default per-repository configuration
 
 import sys
 import json
-import string
 from os.path import exists, dirname
 from gitver.defines import CFGFILE
-from .termcolors import term, bold
+from .termcolors import term
 
 default_config_text = """{
     # automatically generated configuration file
@@ -59,7 +58,7 @@ def remove_comments(text):
     Removes line comments denoted by sub-strings starting with a '#'
     character from the specified string, construct a new text and returns it.
     """
-    data = string.split(text, '\n')
+    data = text.split('\n')
     ret = ''
     for line in data:
         if not line.strip().startswith('#'):
@@ -107,7 +106,7 @@ def load_user_config():
         term.err("An error occured parsing the configuration file \"" +
                  CFGFILE + "\": " + v.message +
                  "\nPlease check its syntax or rename it and generate the "
-                 "default one with the " + bold("gitver init") + " command.")
+                 "default one with the gitver init command.")
         sys.exit(1)
 
     # merge user with defaults
