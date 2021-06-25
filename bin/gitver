@@ -28,7 +28,7 @@ def main():
     # check for the git command
     from gitver.git import git_version
     v = git_version()
-    if not 'git version' in v:
+    if 'git version' not in v:
         term.err("This program requires \"git\" to be installed and "
                  "configured.")
         sys.exit(1)
@@ -61,8 +61,6 @@ def main():
             # apply colors configuration
             from gitver.config import load_user_config
             cfg = load_user_config()
-
-            term.enable_colors(cfg['use_terminal_colors'])
 
             # apply colors from command line
             if args.use_colors == 'yes':
