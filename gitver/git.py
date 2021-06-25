@@ -2,18 +2,11 @@
 git support library
 """
 
-import sys
 import re
+import subprocess
+import sys
 from gitver.termcolors import term
 
-# check for the sh package
-try:
-    import sh
-    from sh import ErrorReturnCode, CommandNotFound
-except ImportError:
-    term.err("A dependency is missing, please install the \"sh\" package and "
-             "run gitver again.")
-    sys.exit(1)
 
 hash_matcher = r".*-g([a-fA-F0-9]+)"
 tag_matcher = r"v{0,1}(?P<maj>\d+)\.(?P<min>\d+)\.(?P<patch>\d+)" \
@@ -25,7 +18,9 @@ def __git_raw(*args):
     @return sh.RunningCommand
     Proxies the specified git command+args and returns it
     """
-    return sh.git(args)
+    command = ["git"]
+    command.extend(args)
+    return subprocess.check_output(command)
 
 
 def __git(*args):
@@ -33,13 +28,13 @@ def __git(*args):
     Proxies the specified git command+args and returns a cleaned up version
     of the stdout buffer.
     """
-    return __git_raw(*args).stdout.replace('\n', '')
+    return __git_raw(*args).replace(b'\n', b'').decode('utf-8')
 
 
 def git_version():
     try:
         ver = __git('--version')
-    except (CommandNotFound, ErrorReturnCode):
+    except subprocess.CalledProcessError as e:
         return ''
     return ver
 
@@ -47,7 +42,7 @@ def git_version():
 def project_root():
     try:
         root = __git('rev-parse', '--show-toplevel')
-    except ErrorReturnCode:
+    except subprocess.CalledProcessError:
         return ''
     return root
 
@@ -56,14 +51,14 @@ def count_tag_to_head(tag):
     try:
         c = __git('rev-list', tag + "..HEAD", '--count')
         return int(c)
-    except ErrorReturnCode:
+    except subprocess.CalledProcessError:
         return False
 
 
 def get_build_id():
     try:
         full_build_id = str(__git('rev-parse', 'HEAD'))
-    except ErrorReturnCode:
+    except subprocess.CalledProcessError:
         return False
     return full_build_id
 
@@ -71,7 +66,7 @@ def get_build_id():
 def last_tag():
     try:
         tag = __git('describe', '--tags', '--abbrev=0')
-    except ErrorReturnCode:
+    except subprocess.CalledProcessError:
         return False
 
     return tag
@@ -96,8 +91,8 @@ def min_hash_length():
     """
     try:
         out = __git_raw('rev-list', '--all', '--abbrev=0',
-                        '--abbrev-commit').stdout
-    except ErrorReturnCode:
+                        '--abbrev-commit').decode("utf-8")
+    except subprocess.CalledProcessError:
         return 0
 
     min_accepted = 7
