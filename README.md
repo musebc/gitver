@@ -420,8 +420,4 @@ There you have it!
 
 
 ## Bugs
-![bugs](http://media.giphy.com/media/10EdqIfzllpg6A/giphy.gif)
-
-NOPE!! MY CODE HAS NO BUGS!11
-
-Just joking, probably quite a few, please report them [here](https://github.com/manuelbua/gitver/issues), thanks!
+Report any issues [here](https://github.com/manuelbua/gitver/issues)
